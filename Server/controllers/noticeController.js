@@ -10,7 +10,7 @@
 
 import Groq from "groq-sdk";
 import Notice from "../Models/notice.js";
-import User from "../models/User.js";
+import User from "../Models/User.js";
 import { SYSTEM_PROMPTS } from "../prompts/legalPrompts.js";
 
 // ─── RAG: keyword-based retrieval ────────────────────────────

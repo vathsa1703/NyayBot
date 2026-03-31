@@ -3,7 +3,7 @@
 // ONE JOB: Serve stats and data for the admin dashboard
 // ============================================================
 
-import Notice from "../models/notice.js";
+import Notice from "../Models/notice.js";
 
 // ─── Get Dashboard Stats ──────────────────────────────────────
 export const getDashboardStats = async (req, res) => {
