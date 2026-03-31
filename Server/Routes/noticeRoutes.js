@@ -7,7 +7,7 @@
 import express from "express";
 
 // ✅ FIXED PATHS
-import { generateNotice, getNoticeById } from "../controllers/noticeController.js";
+import { generateNotice, getNoticeById } from "../Controllers/noticeController.js";
 import validateNoticeRequest from "../Middleware/validate.js";
 import authMiddleware from "../Middleware/auth.js";
 

@@ -11,7 +11,7 @@
 import Groq from "groq-sdk";
 import Notice from "../Models/notice.js";
 import User from "../Models/User.js";
-import { SYSTEM_PROMPTS } from "../prompts/legalPrompts.js";
+import { SYSTEM_PROMPTS } from "../Prompts/legalPrompts.js";
 
 // ─── RAG: keyword-based retrieval ────────────────────────────
 import { LAW_CHUNKS } from "../rag/chunks.js";
