@@ -1,5 +1,5 @@
 // ============================================================
-// server/Models/User.js
+// server/models/User.js
 // ONE JOB: Define what a User looks like in MongoDB
 // ============================================================
 

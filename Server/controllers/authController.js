@@ -5,7 +5,7 @@
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../Models/User.js";
+import User from "../models/User.js";
 
 console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
