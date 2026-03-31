@@ -1,8 +1,3 @@
-// ============================================================
-// server.js — Entry Point
-// ONE JOB: Start the server and connect everything
-// ============================================================
-
 import dotenv from "dotenv";
 dotenv.config();
 console.log("ENV CHECK:", process.env.JWT_SECRET);
