@@ -190,7 +190,7 @@ const LandingPage = ({ navigate }) => {
       <footer className="footer">
         <div className="footer-top">
           <div className="footer-brand">
-            <span className="logo-text">Nyay<span className="accent">Bot</span></span>
+            <span className="logo-text">Jury<span className="accent">fy</span></span>
             <p>Legal notices for every Indian. Justice for everyone.</p>
           </div>
           <div className="footer-links">
@@ -285,7 +285,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
       <div className="auth-left">
         <div className="auth-brand" onClick={() => navigate("landing")} style={{cursor:"pointer"}}>
           <span className="logo-icon">⚖️</span>
-          <span className="logo-text">Nyay<span className="accent">Bot</span></span>
+          <span className="logo-text">Jury<span className="accent">fy</span></span>
         </div>
         <div className="auth-quote">
           <blockquote>
@@ -481,7 +481,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
       <nav className="app-nav">
         <div className="nav-logo" onClick={() => navigate("landing")} style={{cursor:"pointer"}}>
           <span className="logo-icon">⚖️</span>
-          <span className="logo-text">Nyay<span className="accent">Bot</span></span>
+          <span className="logo-text">Jury<span className="accent">fy</span></span>
         </div>
         <div className="app-nav-right">
           <span className="user-badge">
