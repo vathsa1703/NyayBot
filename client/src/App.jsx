@@ -30,7 +30,9 @@ const LandingPage = ({ navigate }) => {
       <nav className="nav">
         <div className="nav-logo">
           <span className="logo-icon">⚖️</span>
-          <span className="logo-text">Nyay<span className="accent">Bot</span></span>
+          <span className="logo-text">
+  Juro<span className="accent">fy</span>
+</span>
         </div>
         <div className="nav-links">
           <a href="#how">How it works</a>
