@@ -1,5 +1,5 @@
 // ============================================================
-// App.jsx — NyayBot Complete Frontend
+// App.jsx — Jurofy Complete Frontend
 // Features:
 //   1. Free limit (1 notice) + Razorpay redirect on limit
 //   2. Order ID required field
@@ -163,7 +163,7 @@ const LandingPage = ({ navigate }) => {
         <h2 className="section-title">Common questions</h2>
         <div className="faq-list">
           {[
-            { q: "Is this a law firm?", a: "No. NyayBot is a document drafting tool. We generate legal notice drafts — not legal advice. We recommend having an advocate review before sending." },
+            { q: "Is this a law firm?", a: "No. Jurofy is a document drafting tool. We generate legal notice drafts — not legal advice. We recommend having an advocate review before sending." },
             { q: "Are the law sections accurate?", a: "Yes. We use a RAG system that retrieves exact sections from the Consumer Protection Act 2019 and E-Commerce Rules 2020 from the official Gazette of India." },
             { q: "Which languages are supported?", a: "English, Hindi, and Kannada. More languages coming soon." },
             { q: "Will companies actually respond?", a: "Most large e-commerce companies have legal teams that take formal notices seriously. A properly cited CPA 2019 notice gets faster responses than repeated customer care calls." },
@@ -216,10 +216,10 @@ const LandingPage = ({ navigate }) => {
         <div className="footer-tnc">
           <h5>⚖️ Terms of Use & Disclaimer</h5>
           <p>
-            By using NyayBot, you agree that generated notices are for informational purposes only
-            and do not constitute legal advice. NyayBot is a document drafting tool, not a law firm,
+            By using Jurofy, you agree that generated notices are for informational purposes only
+            and do not constitute legal advice. Jurofy is a document drafting tool, not a law firm,
             and is not a substitute for a licensed advocate. Users are advised to consult a qualified
-            legal professional before sending any generated notice. NyayBot is not responsible for
+            legal professional before sending any generated notice. Jurofy is not responsible for
             any outcomes resulting from the use of generated documents. All notices are AI-generated
             drafts and should be reviewed for accuracy before use.
           </p>
@@ -231,8 +231,8 @@ const LandingPage = ({ navigate }) => {
         </div>
 
         <div className="footer-bottom">
-          <p>⚠️ NyayBot is a document drafting tool, not a law firm. This is not legal advice.</p>
-          <p>© 2026 NyayBot · Made for India's consumers</p>
+          <p>⚠️ Jurofy is a document drafting tool, not a law firm. This is not legal advice.</p>
+          <p>© 2026 Jurofy · Made for India's consumers</p>
         </div>
       </footer>
     </div>
@@ -267,8 +267,8 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
 
-      localStorage.setItem("nyaybot_token", data.token);
-      localStorage.setItem("nyaybot_user", JSON.stringify(data.user));
+      localStorage.setItem("Jurofy_token", data.token);
+      localStorage.setItem("Jurofy_user", JSON.stringify(data.user));
       onLogin(data.user);
       navigate("app");
     } catch (err) {
@@ -337,7 +337,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
 
           <div className="auth-disclaimer">
             By continuing, you agree to our Terms of Service and Privacy Policy.
-            NyayBot is a document drafting tool, not a law firm.
+            Jurofy is a document drafting tool, not a law firm.
           </div>
         </div>
       </div>
@@ -423,7 +423,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("nyaybot_token");
+      const token = localStorage.getItem("Jurofy_token");
       const res = await fetch("http://localhost:3001/api/notices/generate", {
         method: "POST",
         headers: {
@@ -629,7 +629,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
               <pre className="notice-body">{notice}</pre>
             </div>
             <div className="disclaimer">
-              ⚠️ This is an AI-generated draft. By using NyayBot, you agree this is for informational purposes only and does not constitute legal advice. Please consult a licensed advocate before sending.
+              ⚠️ This is an AI-generated draft. By using Jurofy, you agree this is for informational purposes only and does not constitute legal advice. Please consult a licensed advocate before sending.
             </div>
             <button className="btn-ghost-sm center" onClick={() => { setStep(0); setNotice(""); setError(""); }}>← Generate New Notice</button>
           </div>
@@ -647,16 +647,16 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("nyaybot_user");
-    const token = localStorage.getItem("nyaybot_token");
+    const saved = localStorage.getItem("Jurofy_user");
+    const token = localStorage.getItem("Jurofy_token");
     if (saved && token) setUser(JSON.parse(saved));
   }, []);
 
   const handleLogin = (userData) => setUser(userData);
 
   const handleLogout = () => {
-    localStorage.removeItem("nyaybot_token");
-    localStorage.removeItem("nyaybot_user");
+    localStorage.removeItem("Jurofy_token");
+    localStorage.removeItem("Jurofy_user");
     setUser(null);
     navigate("landing");
   };
