@@ -239,7 +239,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
         ? { email: form.email, password: form.password }
         : { name: form.name, email: form.email, password: form.password };
 
-      const res = await fetch(`http://localhost:3001${endpoint}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -380,7 +380,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     setError("");
     try {
       const token = localStorage.getItem("nyaybot_token");
-      const res = await fetch("http://localhost:3001/api/notices/generate", {
+      const res = await fetch("${import.meta.env.VITE_API_URL}/api/notices/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
