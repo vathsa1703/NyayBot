@@ -1,13 +1,20 @@
 // ============================================================
 // App.jsx — NyayBot Complete Frontend
-// Pages: Landing → Signup/Login → Notice Generator
-// Install: npm install react-router-dom
+// Features:
+//   1. Free limit (1 notice) + Razorpay redirect on limit
+//   2. Order ID required field
+//   3. Clean notice output (no AI disclaimers)
+//   4. Terms & Conditions in footer
+//   5. JWT auth on all notice requests
 // ============================================================
 
 import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 
-// ── Simple Router (no react-router-dom needed) ──
+// ── YOUR RAZORPAY PAYMENT LINK ──
+// Replace with your actual Razorpay payment link after creating one at razorpay.com
+const RAZORPAY_LINK = "https://razorpay.com/payment-link/YOUR_LINK_HERE";
+
 const useRoute = () => {
   const [page, setPage] = useState("landing");
   return { page, navigate: setPage };
@@ -32,24 +39,24 @@ const LandingPage = ({ navigate }) => {
         </div>
         <div className="nav-actions">
           <button className="btn-ghost" onClick={() => navigate("login")}>Login</button>
-          <button className="btn-gold" onClick={() => navigate("signup")}>Get Started</button>
+          <button className="btn-gold" onClick={() => navigate("signup")}>Get Started Free</button>
         </div>
       </nav>
 
       {/* ── Hero ── */}
       <section className="hero">
-        <div className="hero-badge">🇮🇳 Built for India's 1.4 Billion</div>
+        <div className="hero-badge">🇮🇳 Built for India's 1.4 Billion Consumers</div>
         <h1 className="hero-title">
           Fight Back Against<br />
           <span className="hero-highlight">Flipkart. Amazon. Banks.</span>
         </h1>
         <p className="hero-sub">
           Generate legally accurate consumer notices in 2 minutes.<br />
-          Powered by Consumer Protection Act 2019. Free to start.
+          Powered by Consumer Protection Act 2019. First notice free.
         </p>
         <div className="hero-actions">
           <button className="btn-hero" onClick={() => navigate("signup")}>
-            Generate Your Notice →
+            Generate Your Notice Free →
           </button>
           <button className="btn-ghost-hero" onClick={() => navigate("login")}>
             Already have an account
@@ -60,7 +67,7 @@ const LandingPage = ({ navigate }) => {
           <div className="stat-divider" />
           <div className="stat"><span className="stat-num">3</span><span className="stat-label">Languages</span></div>
           <div className="stat-divider" />
-          <div className="stat"><span className="stat-num">₹0</span><span className="stat-label">To start</span></div>
+          <div className="stat"><span className="stat-num">₹0</span><span className="stat-label">First notice free</span></div>
           <div className="stat-divider" />
           <div className="stat"><span className="stat-num">CPA 2019</span><span className="stat-label">Legally accurate</span></div>
         </div>
@@ -89,12 +96,12 @@ const LandingPage = ({ navigate }) => {
             <div className="step-num">03</div>
             <div className="step-icon">📄</div>
             <h3>Download and send</h3>
-            <p>Download your professional PDF notice and send it to the company. Most companies respond within 15 days.</p>
+            <p>Download your professional PDF notice. Most companies respond within 15 days.</p>
           </div>
         </div>
       </section>
 
-      {/* ── Laws we cover ── */}
+      {/* ── Laws ── */}
       <section className="section dark-section" id="laws">
         <div className="section-label">LEGAL COVERAGE</div>
         <h2 className="section-title">Laws we cite for you</h2>
@@ -102,7 +109,7 @@ const LandingPage = ({ navigate }) => {
           <div className="law-card">
             <div className="law-icon">📚</div>
             <h3>Consumer Protection Act 2019</h3>
-            <p>Sections 2(7), 2(10), 2(11), 34, 35, 39, 69, 72 and more — cited precisely based on your complaint.</p>
+            <p>Sections 2(7), 2(10), 2(11), 34, 35, 39, 69, 72 — cited precisely based on your complaint.</p>
           </div>
           <div className="law-card">
             <div className="law-icon">🛒</div>
@@ -117,25 +124,36 @@ const LandingPage = ({ navigate }) => {
         </div>
       </section>
 
-      {/* ── Complaint types ── */}
-      <section className="section" id="complaints">
-        <div className="section-label">WHAT WE COVER</div>
-        <h2 className="section-title">We handle these complaints</h2>
-        <div className="complaint-grid">
-          {[
-            { icon: "📦", label: "Delivery Not Received" },
-            { icon: "💰", label: "Refund Not Processed" },
-            { icon: "❌", label: "Product Defect" },
-            { icon: "🔧", label: "Service Deficiency" },
-            { icon: "📢", label: "Misleading Advertisement" },
-            { icon: "💳", label: "Overcharging" },
-            { icon: "🛡️", label: "Warranty Breach" },
-            { icon: "🏦", label: "Bank / Financial Fraud" },
-          ].map((c) => (
-            <div className="complaint-chip" key={c.label}>
-              <span>{c.icon}</span> {c.label}
-            </div>
-          ))}
+      {/* ── Pricing ── */}
+      <section className="section" id="pricing">
+        <div className="section-label">PRICING</div>
+        <h2 className="section-title">Simple, fair pricing</h2>
+        <div className="pricing-grid">
+          <div className="pricing-card">
+            <div className="pricing-badge">FREE</div>
+            <div className="pricing-price">₹0</div>
+            <div className="pricing-desc">Your first notice</div>
+            <ul className="pricing-features">
+              <li>✅ 1 legal notice</li>
+              <li>✅ English, Hindi, Kannada</li>
+              <li>✅ PDF download</li>
+              <li>✅ CPA 2019 citations</li>
+            </ul>
+            <button className="btn-ghost full-width" onClick={() => navigate("signup")}>Get Started Free</button>
+          </div>
+          <div className="pricing-card featured">
+            <div className="pricing-badge gold">₹99</div>
+            <div className="pricing-price">₹99<span>/notice</span></div>
+            <div className="pricing-desc">After your free notice</div>
+            <ul className="pricing-features">
+              <li>✅ Unlimited notices</li>
+              <li>✅ English, Hindi, Kannada</li>
+              <li>✅ PDF download</li>
+              <li>✅ CPA 2019 + E-Commerce Rules</li>
+              <li>✅ Notice history saved</li>
+            </ul>
+            <button className="btn-gold full-width" onClick={() => navigate("signup")}>Get Started</button>
+          </div>
         </div>
       </section>
 
@@ -145,26 +163,11 @@ const LandingPage = ({ navigate }) => {
         <h2 className="section-title">Common questions</h2>
         <div className="faq-list">
           {[
-            {
-              q: "Is this a law firm?",
-              a: "No. NyayBot is a document drafting tool. We generate legal notice drafts — not legal advice. We recommend having an advocate review before sending."
-            },
-            {
-              q: "Are the law sections accurate?",
-              a: "Yes. We use a RAG system that retrieves exact sections from the Consumer Protection Act 2019 and E-Commerce Rules 2020 PDFs from the official Gazette of India."
-            },
-            {
-              q: "Which languages are supported?",
-              a: "English, Hindi, and Kannada. More languages coming soon."
-            },
-            {
-              q: "Will companies actually respond?",
-              a: "Most large e-commerce companies have legal teams that take formal notices seriously. A properly cited CPA 2019 notice often gets a faster response than repeated customer care calls."
-            },
-            {
-              q: "What happens after sending the notice?",
-              a: "If the company doesn't respond within 15 days, you can file a complaint at the Consumer Forum / District Commission. NyayBot will guide you through next steps."
-            },
+            { q: "Is this a law firm?", a: "No. NyayBot is a document drafting tool. We generate legal notice drafts — not legal advice. We recommend having an advocate review before sending." },
+            { q: "Are the law sections accurate?", a: "Yes. We use a RAG system that retrieves exact sections from the Consumer Protection Act 2019 and E-Commerce Rules 2020 from the official Gazette of India." },
+            { q: "Which languages are supported?", a: "English, Hindi, and Kannada. More languages coming soon." },
+            { q: "Will companies actually respond?", a: "Most large e-commerce companies have legal teams that take formal notices seriously. A properly cited CPA 2019 notice gets faster responses than repeated customer care calls." },
+            { q: "Is my data safe?", a: "Yes. We store only the information you provide to generate the notice. We never sell your data to third parties. See our Privacy Policy below." },
           ].map((f, i) => (
             <div className="faq-item" key={i}>
               <h4>{f.q}</h4>
@@ -177,13 +180,11 @@ const LandingPage = ({ navigate }) => {
       {/* ── CTA ── */}
       <section className="cta-section">
         <h2>Got cheated? Don't stay silent.</h2>
-        <p>Generate your legal notice in 2 minutes. Free to start.</p>
-        <button className="btn-hero" onClick={() => navigate("signup")}>
-          Start for Free →
-        </button>
+        <p>Generate your first legal notice free. No credit card required.</p>
+        <button className="btn-hero" onClick={() => navigate("signup")}>Start for Free →</button>
       </section>
 
-      {/* ── Footer ── */}
+      {/* ── Footer with T&C ── */}
       <footer className="footer">
         <div className="footer-top">
           <div className="footer-brand">
@@ -195,7 +196,7 @@ const LandingPage = ({ navigate }) => {
               <h5>Product</h5>
               <a href="#how">How it works</a>
               <a href="#laws">Laws covered</a>
-              <a href="#complaints">Complaint types</a>
+              <a href="#pricing">Pricing</a>
             </div>
             <div className="footer-col">
               <h5>Legal</h5>
@@ -205,11 +206,30 @@ const LandingPage = ({ navigate }) => {
             </div>
             <div className="footer-col">
               <h5>Account</h5>
-              <a onClick={() => navigate("signup")}>Sign Up</a>
-              <a onClick={() => navigate("login")}>Login</a>
+              <a onClick={() => navigate("signup")} style={{cursor:"pointer"}}>Sign Up Free</a>
+              <a onClick={() => navigate("login")} style={{cursor:"pointer"}}>Login</a>
             </div>
           </div>
         </div>
+
+        {/* Terms & Conditions */}
+        <div className="footer-tnc">
+          <h5>⚖️ Terms of Use & Disclaimer</h5>
+          <p>
+            By using NyayBot, you agree that generated notices are for informational purposes only
+            and do not constitute legal advice. NyayBot is a document drafting tool, not a law firm,
+            and is not a substitute for a licensed advocate. Users are advised to consult a qualified
+            legal professional before sending any generated notice. NyayBot is not responsible for
+            any outcomes resulting from the use of generated documents. All notices are AI-generated
+            drafts and should be reviewed for accuracy before use.
+          </p>
+          <p style={{marginTop: "10px"}}>
+            <strong>Privacy:</strong> We collect only the information necessary to generate your legal notice.
+            We do not sell your personal data to third parties. Your data is stored securely in compliance
+            with the Information Technology Act 2000 and the Digital Personal Data Protection Act 2023.
+          </p>
+        </div>
+
         <div className="footer-bottom">
           <p>⚠️ NyayBot is a document drafting tool, not a law firm. This is not legal advice.</p>
           <p>© 2026 NyayBot · Made for India's consumers</p>
@@ -220,7 +240,7 @@ const LandingPage = ({ navigate }) => {
 };
 
 // ══════════════════════════════════════════════════════
-// AUTH PAGES (Login + Signup)
+// AUTH PAGES
 // ══════════════════════════════════════════════════════
 const AuthPage = ({ mode, navigate, onLogin }) => {
   const isLogin = mode === "login";
@@ -239,7 +259,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
         ? { email: form.email, password: form.password }
         : { name: form.name, email: form.email, password: form.password };
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+      const res = await fetch(`http://localhost:3001${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -247,7 +267,6 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
 
-      // Save token
       localStorage.setItem("nyaybot_token", data.token);
       localStorage.setItem("nyaybot_user", JSON.stringify(data.user));
       onLogin(data.user);
@@ -262,7 +281,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
   return (
     <div className="auth-page">
       <div className="auth-left">
-        <div className="auth-brand" onClick={() => navigate("landing")}>
+        <div className="auth-brand" onClick={() => navigate("landing")} style={{cursor:"pointer"}}>
           <span className="logo-icon">⚖️</span>
           <span className="logo-text">Nyay<span className="accent">Bot</span></span>
         </div>
@@ -270,9 +289,10 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
           <blockquote>
             "Indian law is quite consumer-friendly. I have never been disappointed by institutional support, whether for ₹100 or ₹1L."
           </blockquote>
-          <cite>— Reddit user, r/India</cite>
+          <cite>— Reddit user, r/indianstartups</cite>
         </div>
         <div className="auth-features">
+          <div className="auth-feature">✅ First notice completely free</div>
           <div className="auth-feature">✅ Legally accurate CPA 2019 citations</div>
           <div className="auth-feature">✅ English, Hindi, Kannada</div>
           <div className="auth-feature">✅ PDF download in seconds</div>
@@ -284,7 +304,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
         <div className="auth-card">
           <h2>{isLogin ? "Welcome back" : "Create your account"}</h2>
           <p className="auth-sub">
-            {isLogin ? "Login to access your notices" : "Start generating legal notices for free"}
+            {isLogin ? "Login to access your notices" : "Start generating legal notices — first one free"}
           </p>
 
           {!isLogin && (
@@ -293,12 +313,10 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
               <input value={form.name} onChange={set("name")} placeholder="Rahul Kumar" />
             </div>
           )}
-
           <div className="field-group">
             <label>Email Address</label>
             <input value={form.email} onChange={set("email")} placeholder="you@email.com" type="email" />
           </div>
-
           <div className="field-group">
             <label>Password</label>
             <input value={form.password} onChange={set("password")} placeholder="••••••••" type="password" />
@@ -311,11 +329,10 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
           </button>
 
           <div className="auth-switch">
-            {isLogin ? (
-              <p>Don't have an account? <span onClick={() => navigate("signup")}>Sign up free</span></p>
-            ) : (
-              <p>Already have an account? <span onClick={() => navigate("login")}>Login</span></p>
-            )}
+            {isLogin
+              ? <p>Don't have an account? <span onClick={() => navigate("signup")}>Sign up free</span></p>
+              : <p>Already have an account? <span onClick={() => navigate("login")}>Login</span></p>
+            }
           </div>
 
           <div className="auth-disclaimer">
@@ -329,7 +346,32 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
 };
 
 // ══════════════════════════════════════════════════════
-// NOTICE GENERATOR APP (after login)
+// PAYMENT WALL MODAL
+// ══════════════════════════════════════════════════════
+const PaymentWall = ({ onClose }) => (
+  <div className="modal-overlay">
+    <div className="modal-card">
+      <div className="modal-icon">⚖️</div>
+      <h2>You've used your free notice</h2>
+      <p>Your first legal notice was free. To generate more notices, upgrade for just <strong>₹99 per notice</strong>.</p>
+      <div className="modal-features">
+        <div>✅ Unlimited notices</div>
+        <div>✅ All 3 languages</div>
+        <div>✅ PDF download</div>
+        <div>✅ CPA 2019 + E-Commerce Rules</div>
+      </div>
+      <button className="btn-hero" onClick={() => window.location.href = RAZORPAY_LINK}>
+        Pay ₹99 and Continue →
+      </button>
+      <button className="btn-ghost-sm" onClick={onClose} style={{marginTop: "12px", display: "block", width: "100%", textAlign: "center"}}>
+        Cancel
+      </button>
+    </div>
+  </div>
+);
+
+// ══════════════════════════════════════════════════════
+// NOTICE GENERATOR APP
 // ══════════════════════════════════════════════════════
 const COMPLAINT_TYPES = [
   "Product Defect / Damaged Goods",
@@ -358,6 +400,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
   const [notice, setNotice] = useState("");
   const [noticeId, setNoticeId] = useState("");
   const [error, setError] = useState("");
+  const [showPaywall, setShowPaywall] = useState(false);
 
   const [form, setForm] = useState({
     complainantName: user?.name || "",
@@ -368,6 +411,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     oppositePartyAddress: "",
     complaintType: COMPLAINT_TYPES[0],
     complaintDetails: "",
+    orderId: "",         // ← NEW required field
     amount: "",
     incidentDate: "",
     language: "english",
@@ -380,7 +424,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     setError("");
     try {
       const token = localStorage.getItem("nyaybot_token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/notices/generate`, {
+      const res = await fetch("http://localhost:3001/api/notices/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -389,7 +433,15 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+
+      // ── Free limit reached → show paywall ──
+      if (res.status === 403 && data.code === "FREE_LIMIT_REACHED") {
+        setShowPaywall(true);
+        return;
+      }
+
       if (!res.ok) throw new Error(data.error || "Generation failed");
+
       setNotice(data.notice);
       setNoticeId(data.noticeId);
       setStep(2);
@@ -418,17 +470,21 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
   };
 
   const isStep0Valid = form.complainantName.trim() && form.complainantPhone.trim();
-  const isStep1Valid = form.oppositeParty.trim() && form.complaintDetails.trim().length > 30;
+  const isStep1Valid = form.oppositeParty.trim() && form.complaintDetails.trim().length > 30 && form.orderId.trim();
 
   return (
     <div className="app-page">
-      {/* ── App Navbar ── */}
+      {showPaywall && <PaymentWall onClose={() => setShowPaywall(false)} />}
+
       <nav className="app-nav">
-        <div className="nav-logo" onClick={() => navigate("landing")}>
+        <div className="nav-logo" onClick={() => navigate("landing")} style={{cursor:"pointer"}}>
           <span className="logo-icon">⚖️</span>
           <span className="logo-text">Nyay<span className="accent">Bot</span></span>
         </div>
         <div className="app-nav-right">
+          <span className="user-badge">
+            {user?.isPro ? "⭐ Pro" : `Free · ${user?.noticeCount || 0}/1 used`}
+          </span>
           <span className="user-greeting">👤 {user?.name}</span>
           <button className="btn-ghost-sm" onClick={onLogout}>Logout</button>
         </div>
@@ -437,10 +493,16 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
       <main className="app-main">
         <div className="app-header">
           <h1>Generate Legal Notice</h1>
-          <p>Fill in the details below — our AI will cite the exact law sections that apply.</p>
+          <p>Fill in the details — our AI cites the exact law sections that apply to your case.</p>
+          {!user?.isPro && (
+            <div className="free-notice-banner">
+              {user?.noticeCount >= 1
+                ? "⚠️ You've used your free notice. Upgrade for ₹99 to generate more."
+                : "🎉 Your first notice is completely free!"}
+            </div>
+          )}
         </div>
 
-        {/* Progress */}
         {step < 2 && (
           <div className="progress-wrap">
             {STEPS.map((s, i) => (
@@ -493,13 +555,14 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
           <div className="card animate-in">
             <h2 className="card-title">Complaint Details</h2>
             <p className="card-sub">Tell us what happened</p>
+
             <div className="field-group">
               <label>Company / Person you're complaining against *</label>
               <input value={form.oppositeParty} onChange={set("oppositeParty")} placeholder="Flipkart Internet Pvt. Ltd." />
             </div>
             <div className="field-group">
               <label>Their Address</label>
-              <textarea value={form.oppositePartyAddress} onChange={set("oppositePartyAddress")} placeholder="Registered address" rows={2} />
+              <textarea value={form.oppositePartyAddress} onChange={set("oppositePartyAddress")} placeholder="Registered address of the company" rows={2} />
             </div>
             <div className="field-group">
               <label>Type of Complaint</label>
@@ -507,6 +570,18 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
                 {COMPLAINT_TYPES.map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
+
+            {/* ── Order ID — NEW required field ── */}
+            <div className="field-group">
+              <label>Order ID / Booking ID *</label>
+              <input
+                value={form.orderId}
+                onChange={set("orderId")}
+                placeholder="e.g. FK-78234923 or OD-4923841"
+              />
+              <span className="char-count">Required — this will be cited in your legal notice</span>
+            </div>
+
             <div className="field-group two-col">
               <div>
                 <label>Amount Involved (Rs.)</label>
@@ -517,26 +592,32 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
                 <input value={form.incidentDate} onChange={set("incidentDate")} type="date" />
               </div>
             </div>
+
             <div className="field-group">
               <label>Describe your complaint in detail *</label>
               <textarea value={form.complaintDetails} onChange={set("complaintDetails")}
-                placeholder="Order ID, what was promised, what went wrong, what you tried, response received..." rows={6} />
+                placeholder="What happened — what was ordered, what was delivered, what you tried, responses received..."
+                rows={6} />
               <span className="char-count">{form.complaintDetails.length} chars {form.complaintDetails.length < 30 && "(min 30)"}</span>
             </div>
+
             {error && <div className="error-box">⚠️ {error}</div>}
+
             <div className="btn-row">
               <button className="btn-ghost-sm" onClick={() => setStep(0)}>← Back</button>
               <button className="btn-gold" onClick={generateNotice} disabled={!isStep1Valid || loading}>
-                {loading ? <span className="loading-text"><span className="spinner" /> Generating...</span> : "⚖️ Generate Legal Notice"}
+                {loading
+                  ? <span className="loading-text"><span className="spinner" /> Generating...</span>
+                  : "⚖️ Generate Legal Notice"}
               </button>
             </div>
           </div>
         )}
 
-        {/* Step 2 */}
+        {/* Step 2 — output */}
         {step === 2 && notice && (
           <div className="animate-in">
-            <div className="success-banner">✅ Notice generated! ID: <strong>{noticeId}</strong></div>
+            <div className="success-banner">✅ Notice generated! Reference ID: <strong>{noticeId}</strong></div>
             <div className="notice-card">
               <div className="notice-header">
                 <span>📄 Legal Notice — {form.language.toUpperCase()}</span>
@@ -547,8 +628,10 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
               </div>
               <pre className="notice-body">{notice}</pre>
             </div>
-            <div className="disclaimer">⚠️ AI-generated draft. Have a licensed advocate review before sending.</div>
-            <button className="btn-ghost-sm center" onClick={() => { setStep(0); setNotice(""); setError(""); }}>← New Notice</button>
+            <div className="disclaimer">
+              ⚠️ This is an AI-generated draft. By using NyayBot, you agree this is for informational purposes only and does not constitute legal advice. Please consult a licensed advocate before sending.
+            </div>
+            <button className="btn-ghost-sm center" onClick={() => { setStep(0); setNotice(""); setError(""); }}>← Generate New Notice</button>
           </div>
         )}
       </main>
@@ -557,7 +640,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
 };
 
 // ══════════════════════════════════════════════════════
-// ROOT APP
+// ROOT
 // ══════════════════════════════════════════════════════
 export default function App() {
   const { page, navigate } = useRoute();
@@ -579,9 +662,8 @@ export default function App() {
   };
 
   if (page === "landing") return <LandingPage navigate={navigate} />;
-  if (page === "login") return <AuthPage mode="login" navigate={navigate} onLogin={handleLogin} />;
-  if (page === "signup") return <AuthPage mode="signup" navigate={navigate} onLogin={handleLogin} />;
-  if (page === "app") return <NoticeApp user={user} navigate={navigate} onLogout={handleLogout} />;
-
+  if (page === "login")   return <AuthPage mode="login"  navigate={navigate} onLogin={handleLogin} />;
+  if (page === "signup")  return <AuthPage mode="signup" navigate={navigate} onLogin={handleLogin} />;
+  if (page === "app")     return <NoticeApp user={user}  navigate={navigate} onLogout={handleLogout} />;
   return <LandingPage navigate={navigate} />;
 }
