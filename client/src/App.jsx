@@ -380,7 +380,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     setError("");
     try {
       const token = localStorage.getItem("nyaybot_token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/notices/generate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/notices/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
