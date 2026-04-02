@@ -5,9 +5,9 @@ console.log("ENV CHECK:", process.env.JWT_SECRET);
 import express from "express";
 import cors from "cors";
 import connectDB from "./server/Config/db.js";
-import authRoutes from "./Server/Routes/authRoutes.js";
-import noticeRoutes from "./Server/Routes/noticeRoutes.js";
-import adminRoutes from "./server/Routes/adminRoutes.js";
+import authRoutes from "./Server/routes/authRoutes.js";
+import noticeRoutes from "./Server/routes/noticeRoutes.js";
+import adminRoutes from "./Server/routes/adminRoutes.js";
 
 // ── Connect to MongoDB ──
 connectDB();

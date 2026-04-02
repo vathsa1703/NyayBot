@@ -261,7 +261,7 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
         ? { email: form.email, password: form.password }
         : { name: form.name, email: form.email, password: form.password };
 
-      const res = await fetch(`http://localhost:3001${endpoint}`, {
+      const res = await fetch(`https://nyaybot-1.onrender.com${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -426,7 +426,7 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
     setError("");
     try {
       const token = localStorage.getItem("Jurofy_token");
-      const res = await fetch("http://localhost:3001/api/notices/generate", {
+      const res = await fetch("https://nyaybot-1.onrender.com/api/notices/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
