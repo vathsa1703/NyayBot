@@ -11,6 +11,8 @@ import adminRoutes from "./server/routes/adminRoutes.js";
 connectDB();
 
 const app = express();
+app.use("/test-notice", noticeRoutes);
+console.log("NOTICE ROUTES LOADED");
 
 app.use(cors({
   origin: [
