@@ -461,12 +461,15 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
   language: "English"
 })
       });
-      const text = await res.text();
+   const text = await res.text();
+
+let data;
 
 try {
-  const data = JSON.parse(text);
+  data = JSON.parse(text);
 } catch (e) {
   console.error("RAW RESPONSE:", text);
+  throw new Error("Invalid server response");
 }
 
       // ── Free limit reached → show paywall ──
