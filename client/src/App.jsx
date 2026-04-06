@@ -440,11 +440,17 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          "Authorization":`Bearer ${token}`,
         },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
+      const text = await res.text();
+
+try {
+  const data = JSON.parse(text);
+} catch (e) {
+  console.error("RAW RESPONSE:", text);
+}
 
       // ── Free limit reached → show paywall ──
       if (res.status === 403 && data.code === "FREE_LIMIT_REACHED") {
