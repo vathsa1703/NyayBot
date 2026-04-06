@@ -442,23 +442,19 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
           "Content-Type": "application/json",
           "Authorization":`Bearer ${token}`,
         },
-     body: JSON.stringify({
-  complainantName: "User",
-  complainantAddress: "Not Provided", // ✅ FIX
-  complainantPhone: "9999999999",
-  complainantEmail: "test@test.com",
-
-  oppositeParty: "Company",
-  oppositePartyAddress: "Not Provided", // ✅ FIX
-
-  complaintType: form.type,
-  complaintDetails: form.description,
-
+   body: JSON.stringify({
+  complainantName: form.complainantName,
+  complainantAddress: form.complainantAddress,
+  complainantPhone: form.complainantPhone,
+  complainantEmail: form.complainantEmail,
+  oppositeParty: form.oppositeParty,
+  oppositePartyAddress: form.oppositePartyAddress,
+  complaintType: form.complaintType,    // ← fix
+  complaintDetails: form.complaintDetails, // ← fix
   orderId: form.orderId,
   amount: form.amount,
   incidentDate: form.incidentDate,
-
-  language: "English"
+  language: form.language,              // ← fix (was hardcoded "English")
 })
       });
    const text = await res.text();
