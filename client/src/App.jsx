@@ -442,14 +442,14 @@ const NoticeApp = ({ user, navigate, onLogout }) => {
           "Content-Type": "application/json",
           "Authorization":`Bearer ${token}`,
         },
-       body: JSON.stringify({
-  complainantName: "User", // temp (you can later make input)
-  complainantAddress: "",
+     body: JSON.stringify({
+  complainantName: "User",
+  complainantAddress: "Not Provided", // ✅ FIX
   complainantPhone: "9999999999",
   complainantEmail: "test@test.com",
 
   oppositeParty: "Company",
-  oppositePartyAddress: "",
+  oppositePartyAddress: "Not Provided", // ✅ FIX
 
   complaintType: form.type,
   complaintDetails: form.description,
