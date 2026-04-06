@@ -261,13 +261,23 @@ const AuthPage = ({ mode, navigate, onLogin }) => {
         ? { email: form.email, password: form.password }
         : { name: form.name, email: form.email, password: form.password };
 
-      const res = await fetch(`https://nyaybot-1.onrender.com${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong");
+     const res = await fetch(`https://nyaybot-1.onrender.com${endpoint}`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+
+const text = await res.text();
+
+let data;
+try {
+  data = JSON.parse(text);
+} catch (e) {
+  console.error("NOT JSON RESPONSE:", text); // 👈 THIS IS WHAT I NEED
+  throw new Error("Server returned invalid response");
+}
+
+if (!res.ok) throw new Error(data.error || "Something went wrong");
 
       localStorage.setItem("Jurofy_token", data.token);
       localStorage.setItem("Jurofy_user", JSON.stringify(data.user));
