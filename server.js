@@ -15,12 +15,10 @@ app.use("/test-notice", noticeRoutes);
 console.log("NOTICE ROUTES LOADED");
 
 app.use(cors({
-  origin: [
-    "https://nyay-bot-gamma.vercel.app",
-    "http://localhost:5173"
-  ],
+  origin: true,   // ✅ allow all (for now)
   credentials: true
 }));
+app.options("*", cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
